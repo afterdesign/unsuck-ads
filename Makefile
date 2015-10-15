@@ -20,7 +20,13 @@ setup_venv = \
 
 cleanup = \
 	@rm -rf venv; \
+	rm -rf extensions; \
 	find . -name "*.pyc" -delete
+
+download-chrome-extensions = \
+	@mkdir -p extensions/; \
+	wget --quiet -O extensions/ghostery.crx "https://clients2.google.com/service/update2/crx?response=redirect&x=id%3Dmlomiejdfkolichcflejclcbmpeaniij%26uc&prodversion=32"; \
+	wget --quiet -O extensions/ublock.crx "https://clients2.google.com/service/update2/crx?response=redirect&x=id%3Depcnnfbjfcgphgdmggkamkmgojdagdnn%26uc&prodversion=32"
 
 help:
 	@echo -e "${YELLOW}init:${RESET}\n initialize project"
@@ -28,6 +34,7 @@ help:
 init:
 	$(call install_virtualenv)
 	$(call setup_venv)
+	$(call download-chrome-extensions)
 
 clean:
 	$(call cleanup)
